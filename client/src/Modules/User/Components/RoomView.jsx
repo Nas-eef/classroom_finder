@@ -86,15 +86,11 @@ const RoomView = () => {
           <IconButton className={classes.backButton} onClick={handleBack}>
             <ArrowBackIcon />
           </IconButton>
-          <Typography variant="h5" align="center" gutterBottom>
-            Room Details
-          </Typography>
         </div>
         {classMapData && classMapData.map(room => (
           <div key={room.id}>
-            <Typography variant="h5" align="center" gutterBottom>
-              ROOM: {room.room_number}
-            </Typography>
+              {room.room_number &&<Typography variant="h5" align="center" gutterBottom> ROOM: {room.room_number}</Typography>}
+              {room.name &&<Typography variant="h5" align="center" gutterBottom> {room.name}</Typography>}
             <div style={{ display: "flex" }}>
               {room.image && <img src={require(`../../../Uploads/${room.image}`)} alt={room.room_number} className={classes.image} />}
               <div className={classes.descriptionContainer}>
@@ -106,7 +102,8 @@ const RoomView = () => {
                     <Typography variant="body1" gutterBottom>
                       <ul>
                         <li>Enter into the {room.block}</li>
-                        <li>You will find room number {room.room_number} on the {room.floor} itself.</li>
+                        {room.name &&  <li>You will find the {room.name} on the {room.floor} itself.</li> }
+                        {room.room_number &&  <li>You will find room number {room.room_number} on the {room.floor} itself.</li> }
                       </ul>
                     </Typography>
                   ) : (
@@ -118,7 +115,8 @@ const RoomView = () => {
                         ) : (
                           <li>You can use staircases for reaching {room.floor}.</li>
                         )}
-                        <li>You will find room number {room.room_number} on the {room.floor} itself.</li>
+                       {room.room_number &&  <li>You will find room number {room.room_number} on the {room.floor} itself.</li> }
+                       {room.name &&  <li>You will find the {room.name} on the {room.floor} itself.</li> }
                       </ul>
                     </Typography>
                   )}

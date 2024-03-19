@@ -7,11 +7,14 @@ import GroupIcon from '@material-ui/icons/Group';
 import ClassIcon from '@material-ui/icons/Class';
 import BusinessIcon from '@material-ui/icons/Business';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ReportIcon from '@material-ui/icons/List';
 import { useNavigate } from 'react-router-dom';
 import Users from './Components/Users';
 import Staffs from './Components/Staffs';
 import Blocks from './Components/Blocks';
 import Classrooms from './Components/Classrooms';
+import Departments from './Components/Departments';
+import DashBoardEvents from './Components/DashBoardEvents';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +55,8 @@ const AdminDashboard = () => {
 
   const renderComponent = () => {
     switch (selectedItem) {
+      case 'Reports':
+        return <DashBoardEvents />;
       case 'Users':
         return <Users />;
       case 'Staffs':
@@ -60,8 +65,10 @@ const AdminDashboard = () => {
         return <Classrooms />;
       case 'Blocks':
         return <Blocks />;
+      case 'Departments':
+        return <Departments />;
       default:
-        return <Typography variant="h4" align="center" gutterBottom style={{ color: "#000" }}>Class Room Finder</Typography>;
+        return <Typography variant="h4" align="center" gutterBottom style={{ color: "#000" }}>Class Room Finder Admin Dashboard</Typography>;
     }
   };
 
@@ -104,6 +111,14 @@ const AdminDashboard = () => {
             <MenuItem onClick={() => handleMenuItemClick('Blocks')}>
               <BusinessIcon />
               <Typography variant="inherit">Blocks</Typography>
+            </MenuItem>
+            <MenuItem onClick={() => handleMenuItemClick('Departments')}>
+              <ClassIcon />
+              <Typography variant="inherit">Departments</Typography>
+            </MenuItem>
+            <MenuItem onClick={() => handleMenuItemClick('Reports')}>
+              <ReportIcon />
+              <Typography variant="inherit">Reports</Typography>
             </MenuItem>
             <MenuItem onClick={handleLogout}>
               <ExitToAppIcon />

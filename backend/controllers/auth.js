@@ -18,10 +18,16 @@ export const login = (req, res) => {
         }
 
         const user = results[0];
-        res.status(200).json({ message: 'Login successful', user });
-        console.log("Login successfull",user);
+        if (user.status === 1) { // Assuming status 1 means active
+            res.status(200).json({ message: 'Login successful', user });
+            console.log("Login successful", user);
+        } else {
+            res.status(401).json({ error: 'Your account is deactivated' });
+            console.log("Account deactivated", user);
+        }
     });
 };
+
 export const StaffLogin = (req, res) => {
     const { email, password } = req.body;
     const sql = "SELECT * FROM staffs WHERE email = ? AND password = ?";

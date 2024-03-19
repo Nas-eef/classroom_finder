@@ -6,8 +6,8 @@ import authRoutes from '../Backend/routes/authRoutes.js'
 import getRoutes from '../Backend/routes/getRoute.js'
 import deleteRoutes from '../Backend/routes/deleteRoute.js'
 import updateRoutes from '../Backend/routes/updateRoute.js'
-import multer from "multer";
 import db from './config/db.js';
+import multer from "multer";
 import path from "path";
 import { log } from 'console';
 

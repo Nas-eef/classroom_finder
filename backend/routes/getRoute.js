@@ -1,5 +1,5 @@
 import express from 'express'
-import {  getBlocks,  getClassMap, getClassrooms, getEvents, getStaff,  getUsers } from '../controllers/getServices.js'
+import {  getBlocks,  getClassMap, getClassrooms, getDepartmentMap, getDepartments, getEvents, getStaff,  getUsers } from '../controllers/getServices.js'
 
 
 const router= express.Router()
@@ -9,7 +9,9 @@ router.get('/getStaffs', getStaff)
 router.get('/getBlocks', getBlocks)
 router.get('/getClassrooms', getClassrooms)
 router.get('/getEvents', getEvents)
+router.get('/getDepartments', getDepartments)
 router.post('/getClassMap', getClassMap)
+router.post('/getDepartmentMap', getDepartmentMap)
 
 
 

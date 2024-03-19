@@ -20,10 +20,10 @@ export const addusers = (req, res) => {
 };
 
 export const addStaff = (req, res) => {
-    const { name, email, password, phoneNumber} = req.body;
+    const { name, email, password, phoneNumber,department,designation} = req.body;
   
-    const sql = "INSERT INTO staffs (name, email, password, phone_number) VALUES ( ?, ?, ?,? )";
-    const values = [name, email, password, phoneNumber]; 
+    const sql = "INSERT INTO staffs (name, email, password, phone_number,department,designation) VALUES (?,?, ?, ?, ?,? )";
+    const values = [name, email, password, phoneNumber,department,designation]; 
   
     db.query(sql, values, (err, result) => {
       if (err) {
@@ -49,6 +49,22 @@ export const addClassroom = (req, res) => {
       }
       console.log('Classroom added successfully');
       res.status(200).json({ message: 'Classroom added successfully' });
+    });
+  };
+export const addDepartment = (req, res) => {
+    const { name, block, floor} = req.body;
+  
+    const sql = "INSERT INTO departments (name, block, floor) VALUES ( ?, ?,? )";
+    const values = [name, block, floor]; 
+  
+    db.query(sql, values, (err, result) => {
+      if (err) {
+        console.error('Error adding Department:', err);
+        res.status(500).json({ error: 'Error adding Department' });
+        return;
+      }
+      console.log('Department added successfully');
+      res.status(200).json({ message: 'Department added successfully' });
     });
   };
 

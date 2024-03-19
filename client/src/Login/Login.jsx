@@ -89,8 +89,14 @@ const LoginPage = () => {
         navigate("/UserHome")
       }
     } catch (error) {
+      if (error.response) {
+        alert(error.response.data.error); 
+      } else if (error.request) {
+        alert('No response received from the server');
+      } else {
+        alert('Error occurred during request setup:', error.message);
+      }
       console.error('Error during login:', error);
-      alert(error)
     }
   };
 

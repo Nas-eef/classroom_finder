@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Typography, Grid, AppBar, Toolbar } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import BlockIcon from '@material-ui/icons/Block';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +33,12 @@ const useStyles = makeStyles((theme) => ({
   deleteButton: {
     color: '#ff0000',
   },
+  activateButton: {
+    color: '#4CAF50',
+  },
+  deactivateButton: {
+    color: '#f44336',
+  },
   dialogContent: {
     display: 'grid',
     gap: theme.spacing(2),
@@ -57,6 +65,29 @@ const Users = () => {
       alert(error);
     }
   };
+
+  const handleActivateUser = async (id) => {
+    try {
+      const response = await axios.put(`http://localhost:8081/api/update/UpdateStatus/${id}`, { status: 1, id });
+      alert(response.data.message);
+      getUsers();
+    } catch (error) {
+      console.error('Error activating user:', error.message);
+      alert(error);
+    }
+  };
+  
+  const handleDeactivateUser = async (id) => {
+    try {
+      const response = await axios.put(`http://localhost:8081/api/update/UpdateStatus/${id}`, { status: 0, id });
+      alert(response.data.message);
+      getUsers();
+    } catch (error) {
+      console.error('Error deactivating user:', error.message);
+      alert(error);
+    }
+  };
+  
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -117,21 +148,29 @@ const Users = () => {
               <TableCell className={classes.tableHeader}>Name</TableCell>
               <TableCell className={classes.tableHeader}>Email</TableCell>
               <TableCell className={classes.tableHeader}>Action</TableCell>
+              <TableCell className={classes.tableHeader}>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>
-                  <IconButton aria-label="delete" className={classes.deleteButton} onClick={() => handleDeleteUser(user.id)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
+          {users.map((user) => (
+  <TableRow key={user.id}>
+    <TableCell>{user.id}</TableCell>
+    <TableCell>{user.name}</TableCell>
+    <TableCell>{user.email}</TableCell>
+    <TableCell>{user.status == 1 ? "Active" : "Blocked"}</TableCell>
+    <TableCell>
+      {user.status == 1 ? (
+        <IconButton aria-label="deactivate" onClick={() => handleDeactivateUser(user.id)} className={classes.deactivateButton}>
+          <BlockIcon /> <Typography>Deactivate</Typography>
+        </IconButton>
+      ) : (
+        <IconButton aria-label="activate" onClick={() => handleActivateUser(user.id)} className={classes.activateButton}>
+          <CheckCircleIcon /> <Typography>Activate</Typography>
+        </IconButton>
+      )}
+    </TableCell>
+  </TableRow>
+))}
           </TableBody>
         </Table>
       </TableContainer>
